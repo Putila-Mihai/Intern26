@@ -7,3 +7,5 @@ After completing the task, push changes to your branch.
 Please do not use AI to complete the tasks. Use it as a search engine or if you need help to understand a concept.
 
 Reading documentation should always come first.
+
+// note that syncing gradle (pushin the spinning icon button) was needed to install the correct gradle version
