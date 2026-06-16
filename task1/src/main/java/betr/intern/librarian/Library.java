@@ -11,6 +11,7 @@ public class Library {
     public Library() {
         books = new ArrayList<Book>();
     }
+
     public Library(Collection<Book> books) {
         this.books = books;
     }
