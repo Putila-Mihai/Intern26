@@ -26,7 +26,7 @@ public class Library {
     }
 
     public Book removeBook(UUID uuid) {
-        Optional<Book> book = books.stream().filter(b -> b.getUuid().equals(uuid)).findFirst();
+        Optional<Book> book = books.stream().filter(b -> b.getId().equals(uuid)).findFirst();
         Book bookToRemove = book.orElseThrow();
         books.remove(bookToRemove);
         return bookToRemove;

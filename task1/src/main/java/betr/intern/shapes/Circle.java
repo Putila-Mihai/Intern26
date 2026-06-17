@@ -1,6 +1,6 @@
 package betr.intern.shapes;
 
-public final class Circle extends Shape {
+public final class Circle implements Shape {
     private final double radius;
 
     public Circle(double radius) {

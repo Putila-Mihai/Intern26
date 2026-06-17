@@ -1,6 +1,6 @@
 package betr.intern.shapes;
 
-public final class Rectangle extends Shape {
+public final class Rectangle implements Shape {
     private final double length;
     private final double width;
 

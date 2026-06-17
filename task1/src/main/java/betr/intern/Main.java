@@ -8,10 +8,7 @@ import betr.intern.shapes.Rectangle;
 import betr.intern.shapes.Shape;
 import betr.intern.shapes.Triangle;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -51,13 +48,13 @@ public class Main {
         // exercise 2
         System.out.println("exercise 2");
         Library library = new Library();
-        Book book1 = new Book("Effective Java", "Joshua Bloch");
-        Book book2 = new Book("idk man", "Rasputin");
+        Book book1 = new Book("1234567890","Effective Java", "Joshua Bloch");
+        Book book2 = new Book("0987654321", "idk man", "Rasputin");
         library.addBook(book1);
         library.addBook(book2);
         library.getBooks().forEach(System.out::println);
         System.out.println();
-        library.removeBook(book1.getUuid());
+        library.removeBook(book1.getId());
         library.getBooks().forEach(System.out::println);
         System.out.println();
 
@@ -72,18 +69,17 @@ public class Main {
 
         // exercise 4
         System.out.println("exercise 4");
-        List<Integer> list = new ArrayList<>();
+        Set<Integer> integerSet = new HashSet<>();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             Integer n = scanner.nextInt();
             try {
-                if (list.stream().anyMatch(number -> number.equals(n)))
+                if(!integerSet.add(n))
                     throw new DuplicateException();
             } catch (DuplicateException e) {
                 System.out.println(e.getMessage());
                 break;
             }
-            list.add(n);
         }
     }
 }

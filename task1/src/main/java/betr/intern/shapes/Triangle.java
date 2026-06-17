@@ -2,7 +2,7 @@ package betr.intern.shapes;
 
 import static java.lang.Math.sqrt;
 
-public final class Triangle extends Shape {
+public final class Triangle implements Shape {
     private final double side1;
     private final double side2;
     private final double side3;
