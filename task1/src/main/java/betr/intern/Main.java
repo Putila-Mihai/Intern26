@@ -10,5 +10,11 @@ public class Main {
 
         System.out.println(circle.getArea());
         System.out.println(triangle.getArea());
+
+        String cuvant1 = "secure";
+        String cuvant2 = "rescue";
+
+        boolean suntAnagrame = AnagramCheck.isAnagram(cuvant1, cuvant2);
+        System.out.println(suntAnagrame);
         }
     }
