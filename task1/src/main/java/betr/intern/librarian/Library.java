@@ -1,33 +1,43 @@
 package betr.intern.librarian;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class Library {
-    private final Collection<Book> books;
+    private final Map<Bok, Integer> books;
 
     public Library() {
-        books = new ArrayList<Book>();
+        books = new HashMap<Bok, Integer>();
     }
 
-    public Library(Collection<Book> books) {
+    public Library(HashMap<Bok, Integer> books) {
         this.books = books;
     }
 
-    public Collection<Book> getBooks() {
+    public Map<Bok, Integer> getBooks() {
         return books;
     }
 
-    public Book addBook(Book book) {
-        books.add(book);
+    public Bok getBookFromId(UUID id) {
+        Optional<Bok> lebook = Optional.ofNullable(
+                books.keySet()
+                        .stream()
+                        .filter(
+                                book -> book.id().equals(id)
+                        )
+                        .findFirst()
+                        .orElse(null)
+        );
+        return lebook.get();
+    }
+
+    public Bok addBook(Bok book) {
+        books.put(book, books.getOrDefault(book, 0) + 1);
         return book;
     }
 
-    public Book removeBook(UUID uuid) {
-        Optional<Book> book = books.stream().filter(b -> b.getId().equals(uuid)).findFirst();
-        Book bookToRemove = book.orElseThrow();
+    public Bok removeBook(UUID uuid) {
+        Optional<Bok> book = Optional.of(books.containsKey(getBookFromId(uuid)) ? getBookFromId(uuid) : null);
+        Bok bookToRemove = book.orElseThrow();
         books.remove(bookToRemove);
         return bookToRemove;
     }
