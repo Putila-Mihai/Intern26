@@ -11,7 +11,7 @@ public class Item {
 
     public Item(){}
 
-    public Item(Long id, String name, String details, int quantityInStock, double price, Category category){
+    public Item(Long id, String name, String details, double price, Category category){
         this.id=id;
         this.details=details;
         this.name=name;

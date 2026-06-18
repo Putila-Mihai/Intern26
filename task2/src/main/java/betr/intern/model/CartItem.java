@@ -2,8 +2,8 @@ package betr.intern.model;
 
 public class CartItem {
 
-    public final Item item;
-    public int quantity;
+    private final Item item;
+    private int quantity;
 
     public CartItem(Item item, int quantity){
         if(quantity<=0){
@@ -32,8 +32,8 @@ public class CartItem {
         this.quantity+=quantity;
     }
 
-    public double getSubtotal(int quantity){
-        return item.getPrice()*quantity;
+    public double getSubtotal(){
+        return item.getPrice()*this.quantity;
     }
 
 

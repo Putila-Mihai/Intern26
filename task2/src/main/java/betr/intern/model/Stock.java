@@ -1,5 +1,7 @@
 package betr.intern.model;
 
+import betr.intern.exception.OutOfStockException;
+
 public class Stock {
 
     private Item item;
@@ -53,7 +55,7 @@ public class Stock {
             throw new IllegalArgumentException("Nu poti scadea o cantitate negativa!");
         }
         if(!hasEnoughStock(amount)){
-            throw new IllegalArgumentException("Nu este stoc suficient pentru operatiunea aceasta!");
+            throw new OutOfStockException("Nu este stoc suficient pentru operatiunea aceasta!");
         }
 
         this.quantity-=amount;
