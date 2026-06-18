@@ -1,13 +1,13 @@
 package betr.intern.Repos.BasicRepos;
 
+import betr.intern.Model.Category;
 import betr.intern.Model.Item;
 import betr.intern.Repos.IRepository;
-import betr.intern.Validators.ItemValidate;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ItemRepository implements IRepository<Item> {
     Set<Item> items;
@@ -21,13 +21,23 @@ public class ItemRepository implements IRepository<Item> {
         return items;
     }
 
+    /**
+     * Add operation for items
+     * Returns an Item object that is to be added in the repository
+     *
+     * @param item an item that is to be added in the repository
+     * @throws RuntimeException if the item already exists
+     * @return
+     */
     @Override
     public Item add(Item item) {
         try {
-            ItemValidate.validate(item);
-            if (!items.add(item))
+            if (items.contains(item))
                 throw new RuntimeException("item already exists");
-        } catch (RuntimeException e) {
+            if (item.equals(null))
+                throw new NullPointerException("item is null");
+            items.add(item);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return item;
@@ -36,9 +46,8 @@ public class ItemRepository implements IRepository<Item> {
     @Override
     public void remove(Item item) {
         try {
-            Optional<Item> itemToRemove = Optional.ofNullable(this.get(Optional.of(item).stream().findFirst().orElseThrow()));
-            ItemValidate.validate(itemToRemove.get());
-            items.remove(itemToRemove.get());
+            Item itemToRemove = this.get(Optional.of(item).stream().findFirst().orElseThrow());
+            items.remove(itemToRemove);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -63,8 +72,22 @@ public class ItemRepository implements IRepository<Item> {
         return item;
     }
 
+   /* public Item updateQuantityOfAnItem(Item item, int quantity) {
+        remove(item);
+        Item itemUpdated = add(item.ofQuantity(quantity));
+        return itemUpdated;
+    }
+
+    public Item updatePriceOfAnItem(Item item, double price) {
+        return item.ofPrice(price);
+    }*/
+
     @Override
     public Item get(Item item) {
         return items.stream().filter(i -> i.id().equals(item.id())).findFirst().orElseThrow();
+    }
+
+    public Set<Item> getItemsByCategory(Category category) {
+        return items.stream().filter(item -> item.category().equals(category)).collect(Collectors.toSet());
     }
 }

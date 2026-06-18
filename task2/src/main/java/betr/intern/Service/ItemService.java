@@ -5,32 +5,27 @@ import betr.intern.Model.Item;
 import betr.intern.Repos.BasicRepos.ItemRepository;
 import betr.intern.Repos.IRepository;
 
-public class GigaService {
-    private final IRepository<Item> repository;
-    public GigaService() {
+public final class ItemService {
+    private final ItemRepository repository;
+    public ItemService() {
         this.repository = new ItemRepository();
     }
-    public GigaService(IRepository<Item> repository) {
-        this.repository = repository;
+    public ItemService(IRepository<Item> repository) {
+        this.repository = (ItemRepository) repository;
+    }
+
+    public Item getItem(Item item) {
+        return repository.get(item);
     }
 
     public void assignItemToCategory(Item item, Category category) {
         Item itemToAssignNewCategory = repository.get(item);
-        Item newItem = new Item(itemToAssignNewCategory.id(),
-                itemToAssignNewCategory.name(),
-                itemToAssignNewCategory.details(),
-                itemToAssignNewCategory.quantity(),
-                category,
-                itemToAssignNewCategory.price()
-        );
+        Item newItem = itemToAssignNewCategory.ofCategory(itemToAssignNewCategory.id(), category);
         repository.update(newItem);
     }
 
     public void printListOfItemsGivenACategory(Category category) {
-        repository.getAll().forEach(item -> {
-            if (item.category().equals(category))
-                System.out.println(item);
-        });
+        repository.getItemsByCategory(category);
     }
 
     public void addItemToStock(Item item) {
@@ -43,5 +38,10 @@ public class GigaService {
 
     public void printAllItems() {
         repository.getAll().forEach(item -> {System.out.println(item.toString());});
+    }
+
+    public void updateItemQuantity(Item item, int quantity) {
+        Item itemToUpdate = repository.get(item).ofQuantity(quantity);
+        repository.update(itemToUpdate);
     }
 }
