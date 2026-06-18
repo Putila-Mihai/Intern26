@@ -31,7 +31,7 @@ public class Category {
     @Override
     public boolean equals(Object o) {
         if(this == o) return true; //daca comparam obiectul cu el insusi
-        if(o == null || getClass() !== o.getClass()) return false; //daca obiectul nu exista sau nu este de tipul respectiv
+        if(o == null || getClass() != o.getClass()) return false; //daca obiectul nu exista sau nu este de tipul respectiv
 
         Category category = (Category) o; //convertim o la tipul Category
         return Objects.equals(id, category.id); //comparam id-urile obiectelor
