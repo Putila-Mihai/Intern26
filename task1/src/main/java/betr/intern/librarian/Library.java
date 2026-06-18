@@ -3,41 +3,36 @@ package betr.intern.librarian;
 import java.util.*;
 
 public class Library {
-    private final Map<Bok, Integer> books;
+    private final Map<Book, Integer> books;
 
     public Library() {
-        books = new HashMap<Bok, Integer>();
+        books = new HashMap<Book, Integer>();
     }
 
-    public Library(HashMap<Bok, Integer> books) {
+    public Library(HashMap<Book, Integer> books) {
         this.books = books;
     }
 
-    public Map<Bok, Integer> getBooks() {
+    public Map<Book, Integer> getBooks() {
         return books;
     }
 
-    public Bok getBookFromId(UUID id) {
-        Optional<Bok> lebook = Optional.ofNullable(
-                books.keySet()
-                        .stream()
-                        .filter(
-                                book -> book.id().equals(id)
-                        )
-                        .findFirst()
-                        .orElse(null)
-        );
-        return lebook.get();
+    public Book getBookFromId(UUID id) {
+        return books.keySet()
+                .stream()
+                .filter(book -> books.keySet().contains(book))
+                .findFirst()
+                .orElseThrow();
     }
 
-    public Bok addBook(Bok book) {
+    public Book addBook(Book book) {
         books.put(book, books.getOrDefault(book, 0) + 1);
         return book;
     }
 
-    public Bok removeBook(UUID uuid) {
-        Optional<Bok> book = Optional.of(books.containsKey(getBookFromId(uuid)) ? getBookFromId(uuid) : null);
-        Bok bookToRemove = book.orElseThrow();
+    public Book removeBook(UUID uuid) {
+        Optional<Book> book = Optional.of(books.containsKey(getBookFromId(uuid)) ? getBookFromId(uuid) : null);
+        Book bookToRemove = book.orElseThrow();
         books.remove(bookToRemove);
         return bookToRemove;
     }

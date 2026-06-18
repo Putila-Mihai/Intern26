@@ -1,7 +1,6 @@
 package betr.intern;
 
 import betr.intern.custom_excp.DuplicateException;
-import betr.intern.librarian.Bok;
 import betr.intern.librarian.Book;
 import betr.intern.librarian.Library;
 import betr.intern.shapes.Circle;
@@ -49,8 +48,8 @@ public class Main {
         // exercise 2
         System.out.println("exercise 2");
         Library library = new Library();
-        Bok book1 = new Bok("1234567890","Effective Java", "Joshua Bloch"); // Book book1 = new Book("1234567890","Effective Java", "Joshua Bloch");
-        Bok book2 = new Bok("0987654321", "idk man", "Rasputin"); // Book book2 = new Book("0987654321", "idk man", "Rasputin");
+        Book book1 = new Book("1234567890","Effective Java", "Joshua Bloch");
+        Book book2 = new Book("0987654321", "idk man", "Rasputin");
         library.addBook(book1);
         library.addBook(book2);
         library.getBooks().forEach((b, v) -> System.out.format("Book: %s, which is in %d copies\n", b, v));
