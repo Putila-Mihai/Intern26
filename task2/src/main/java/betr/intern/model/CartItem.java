@@ -36,6 +36,9 @@ public class CartItem {
         return item.getPrice()*this.quantity;
     }
 
-
+    @Override
+    public String toString() {
+        return item.getName() + " x " + quantity + " (Pret unitar: " + item.getPrice() + " | Subtotal: " + getSubtotal() + ")";
+    }
 
 }

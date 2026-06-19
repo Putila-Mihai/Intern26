@@ -53,7 +53,18 @@ public class ShoppingCart {
         items.clear();
     }
 
+    public void printCart() {
+        if (items.isEmpty()) {
+            System.out.println("Cosul de cumparaturi este gol.");
+            return;
+        }
+        System.out.println("\n Cos de cumparaturi:");
+        for (CartItem cartItem : items) {
+            System.out.println("- " + cartItem);
+        }
+        System.out.printf("Total de plata: %.2f RON\n", getTotalPrice());
 
+    }
 
     private Optional<CartItem> findCartItem(Item item) {
         return items.stream()

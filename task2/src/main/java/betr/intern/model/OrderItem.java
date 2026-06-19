@@ -30,5 +30,8 @@ public class OrderItem {
         return priceAtPurchase * quantity;
     }
 
-
+    @Override
+    public String toString() {
+        return item.getName() + " x " + quantity + " (Pret achizitie: " + priceAtPurchase + " | Subtotal: " + getSubtotal() + ")";
+    }
 }

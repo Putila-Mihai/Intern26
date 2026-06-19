@@ -37,5 +37,14 @@ public class Order {
         return totalPrice;
     }
 
+    public void printOrderDetail() {
 
+        System.out.println("Detalii Comanda  " + orderId);
+        System.out.println("Data achizitiei: " + datePurchased);
+
+        for (OrderItem orderItem : items) {
+            System.out.println("- " + orderItem);
+        }
+        System.out.printf("Total Comanda: %.2f RON\n", totalPrice);
+    }
 }
