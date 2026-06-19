@@ -25,7 +25,7 @@ public final class ItemService {
     }
 
     public void printListOfItemsGivenACategory(Category category) {
-        repository.getItemsByCategory(category);
+        repository.getItemsByCategory(category).forEach(System.out::println);
     }
 
     public void addItemToStock(Item item) {
