@@ -10,38 +10,38 @@ public final class ItemService {
     public ItemService() {
         this.repository = new ItemRepository();
     }
-    public ItemService(IRepository<Item> repository) {
+    public ItemService(final IRepository<Item> repository) {
         this.repository = (ItemRepository) repository;
     }
 
-    public Item getItem(Item item) {
-        return repository.get(item);
+    // testing Optional type
+    public Item getItem(final Item item) {
+        return repository.find(item).orElseThrow();
     }
 
-    public void assignItemToCategory(Item item, Category category) {
-        Item itemToAssignNewCategory = repository.get(item);
-        Item newItem = itemToAssignNewCategory.ofCategory(itemToAssignNewCategory.id(), category);
+    public void assignItemToCategory(final Item item, final Category category) {
+        final Item itemToAssignNewCategory = repository.find(item).orElseThrow();
+        final Item newItem = itemToAssignNewCategory.ofCategory(itemToAssignNewCategory.id(), category);
         repository.update(newItem);
     }
 
-    public void printListOfItemsGivenACategory(Category category) {
+    public void printListOfItemsGivenACategory(final Category category) {
         repository.getItemsByCategory(category).forEach(System.out::println);
     }
 
-    public void addItemToStock(Item item) {
+    public void addItemToStock(final Item item) {
         try {
             repository.add(item);
-        } catch (NullPointerException e) {
+        } catch (final Exception e) {
             System.out.format("addItemToStock: %s%n", e.getMessage());
         }
     }
 
     public void printAllItems() {
-        repository.getAll().forEach(item -> {System.out.println(item.toString());});
+        repository.getAll().forEach(item -> System.out.println(item.toString()));
     }
 
-    public void updateItemQuantity(Item item, int quantity) {
-        Item itemToUpdate = repository.get(item).ofQuantity(quantity);
-        repository.update(itemToUpdate);
+    public void updateItemQuantity(final Item item, final int quantity) {
+        repository.update(Item.ofQuantityStatic(item, quantity));
     }
 }

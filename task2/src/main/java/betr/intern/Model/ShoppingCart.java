@@ -24,15 +24,15 @@ public record ShoppingCart(UUID id, Map<Item, Integer> items, Double totalPrice)
         this(UUID.randomUUID(), Map.of(), 0d);
     }
 
-    public ShoppingCart(Map<Item, Integer> items, Double totalPrice) {
+    public ShoppingCart(final Map<Item, Integer> items, final Double totalPrice) {
         this(UUID.randomUUID(), items, totalPrice);
     }
 
-    public ShoppingCart ofTotalPrice(UUID keptId, Double totalPrice) {
+    public ShoppingCart ofTotalPrice(final UUID keptId, final Double totalPrice) {
         return new ShoppingCart(keptId, items, totalPrice);
     }
 
-    public ShoppingCart ofItems(UUID keptId, Map<Item, Integer> items) {
+    public ShoppingCart ofItems(final UUID keptId, final Map<Item, Integer> items) {
         return new ShoppingCart(keptId, items, totalPrice);
     }
 }

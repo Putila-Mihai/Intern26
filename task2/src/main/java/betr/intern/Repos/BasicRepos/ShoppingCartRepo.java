@@ -18,46 +18,36 @@ public class ShoppingCartRepo implements IRepository<ShoppingCart> {
     }
 
     @Override
-    public ShoppingCart add(ShoppingCart shoppingCart) {
-        try {
-            if (shoppingCarts.contains(shoppingCart))
-                throw new RuntimeException("shoppingCart already exists");
-            if (shoppingCart.equals(null))
-                throw new NullPointerException("shoppingCart is null");
-            shoppingCarts.add(shoppingCart);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public ShoppingCart add(final ShoppingCart shoppingCart) {
+        if (find(shoppingCart).isPresent()) {
+            throw new RuntimeException("ShoppingCart already exists");
         }
+        shoppingCarts.add(shoppingCart);
         return shoppingCart;
     }
 
     @Override
-    public void remove(ShoppingCart shoppingCart) {
-        try {
-            Optional<ShoppingCart> shoppingCartToRemove = Optional.of(this.get(Optional.of(shoppingCart).stream().findFirst().orElseThrow()));
-            shoppingCarts.remove(shoppingCartToRemove.get());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public void remove(final ShoppingCart shoppingCart) {
+        find(shoppingCart).ifPresentOrElse(shoppingCarts::remove, () -> {
+            throw new RuntimeException("ShoppingCart to be removed not found");
+        });
     }
 
     @Override
-    public ShoppingCart update(ShoppingCart shoppingCart) {
+    public ShoppingCart update(final ShoppingCart shoppingCart) {
         try {
-            ShoppingCart shoppingCartToRemove = shoppingCarts.stream()
-                    .filter(i -> i.id().equals(shoppingCart.id()))
-                    .findFirst()
-                    .orElseThrow();
-            remove(shoppingCartToRemove);
+            remove(shoppingCart);
             add(shoppingCart);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e.getMessage());
         }
         return shoppingCart;
     }
 
     @Override
-    public ShoppingCart get(ShoppingCart shoppingCart) {
-        return shoppingCarts.stream().filter(i -> i.id().equals(shoppingCart.id())).findFirst().orElseThrow();
+    public Optional<ShoppingCart> find(final ShoppingCart shoppingCart) {
+        return shoppingCarts.stream().filter(i -> i.id().equals(shoppingCart.id())).findFirst();
     }
+
+
 }

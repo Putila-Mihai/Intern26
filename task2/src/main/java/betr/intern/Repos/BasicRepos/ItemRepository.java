@@ -22,35 +22,28 @@ public class ItemRepository implements IRepository<Item> {
     }
 
     /**
-     * Add operation for items
-     * Returns an Item object that is to be added in the repository
+     * Add operation for items.
+     * Returns an Item object that is to be added in the repository.
+     * Will use find to get an Optional of item, check if it is present, return if it is, throw if not
      *
      * @param item an item that is to be added in the repository
      * @throws RuntimeException if the item already exists
-     * @return
+     * @return item to be added
      */
     @Override
-    public Item add(Item item) {
-        try {
-            if (items.contains(item))
-                throw new RuntimeException("item already exists");
-            if (item.equals(null))
-                throw new NullPointerException("item is null");
-            items.add(item);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public Item add(final Item item) throws RuntimeException {
+        if (find(item).isPresent()) {
+            throw new RuntimeException("item already exists");
         }
+        items.add(item);
         return item;
     }
 
     @Override
-    public void remove(Item item) {
-        try {
-            Item itemToRemove = this.get(Optional.of(item).stream().findFirst().orElseThrow());
-            items.remove(itemToRemove);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public void remove(final Item item) {
+        find(item).ifPresentOrElse(items::remove, () -> {
+            throw new RuntimeException("Item to be removed not found");
+        });
     }
 
     /***
@@ -58,15 +51,11 @@ public class ItemRepository implements IRepository<Item> {
         and adding a new object with the new properties. not using a framework *yet*
      ***/
     @Override
-    public Item update(Item item) {
+    public Item update(final Item item) {
         try {
-            Item itemToRemove = items.stream()
-                    .filter(i -> i.id().equals(item.id()))
-                    .findFirst()
-                    .orElseThrow();
-            remove(itemToRemove);
+            remove(item);
             add(item);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e.getMessage());
         }
         return item;
@@ -83,11 +72,11 @@ public class ItemRepository implements IRepository<Item> {
     }*/
 
     @Override
-    public Item get(Item item) {
-        return items.stream().filter(i -> i.id().equals(item.id())).findFirst().orElseThrow();
+    public Optional<Item> find(final Item item) {
+        return items.stream().filter(i -> i.id().equals(item.id())).findFirst();
     }
 
-    public Set<Item> getItemsByCategory(Category category) {
+    public Set<Item> getItemsByCategory(final Category category) {
         return items.stream().filter(item -> item.category().equals(category)).collect(Collectors.toSet());
     }
 }

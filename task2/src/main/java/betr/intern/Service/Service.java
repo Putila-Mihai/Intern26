@@ -5,20 +5,24 @@ import betr.intern.Model.Item;
 import betr.intern.Model.Order;
 import betr.intern.Model.ShoppingCart;
 
-public class Service {
-    private final ItemService itemService = new ItemService();
-    private final OrderService orderService = new OrderService();
-    private final ShoppingCartService shoppingCartService = new ShoppingCartService();
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-    public void assignItemToCategory(Item item, Category category) {
+public class Service {
+    private static final ItemService itemService = new ItemService();
+    private static final OrderService orderService = new OrderService();
+    private static final ShoppingCartService shoppingCartService = new ShoppingCartService();
+
+    public void assignItemToCategory(final Item item, final Category category) {
         itemService.assignItemToCategory(item, category);
     }
 
-    public void printListOfItemsGivenACategory(Category category) {
+    public void printListOfItemsGivenACategory(final Category category) {
         itemService.printListOfItemsGivenACategory(category);
     }
 
-    public void addItemToStock(Item item) {
+    public void addItemToStock(final Item item) {
         itemService.addItemToStock(item);
     }
 
@@ -26,30 +30,49 @@ public class Service {
         itemService.printAllItems();
     }
 
-    public ShoppingCart CreateShoppingCartForUser() {
+    public ShoppingCart createShoppingCartForUser() {
         return shoppingCartService.createShoppingCartForUser();
     }
 
-    public void addItemToShoppingCart(ShoppingCart shoppingCart, Item item) {
+    public void addItemToShoppingCart(final ShoppingCart shoppingCart, final Item item) {
         shoppingCartService.addItemToShoppingCart(shoppingCart, item);
     }
 
-    public void printShoppingCartWithPriceAndItems(ShoppingCart shoppingCart) {
+
+
+    public void printShoppingCartWithPriceAndItems(final ShoppingCart shoppingCart) {
         shoppingCartService.printShoppingCartWithPriceAndItems(shoppingCart);
     }
 
-    public Order Checkout(ShoppingCart shoppingCart) {
-        Order order = orderService.addOrder(shoppingCart);
-        shoppingCart.items()
-                .forEach(
-                        (key, value) -> itemService.updateItemQuantity(
-                                key,
-                                itemService.getItem(key).quantity() - value
-                        ));
-        shoppingCartService.deleteShoppingCart(shoppingCart);
-        return order;
+    public boolean checkIfItemsWithCartQuantityGreaterThanAvailableStock(final ShoppingCart shoppingCart) {
+        final ShoppingCart foundShoppingCart = shoppingCartService.getShoppingCart(shoppingCart);
+
+        return foundShoppingCart.items().entrySet().stream()
+                .filter(entry -> entry.getValue() > entry.getKey().quantity())
+                .peek(entry -> System.out.format(
+                        "You are attempting to purchase %d copies of %s, but only %d are in stock.%n",
+                        entry.getValue(),
+                        entry.getKey().name(),
+                        entry.getKey().quantity()
+                ))
+                .findAny()
+                .isPresent();
     }
-    public void printOrderDetails(Order order) {
+
+    public Optional<Order> checkOut(final ShoppingCart shoppingCart) {
+        final ShoppingCart foundShoppingCart = shoppingCartService.getShoppingCart(shoppingCart);
+        if (checkIfItemsWithCartQuantityGreaterThanAvailableStock(foundShoppingCart)) {
+            return Optional.empty();
+        } else {
+            final Order order = orderService.addOrder(foundShoppingCart);
+            foundShoppingCart.items().forEach((key, value) ->
+                    itemService.updateItemQuantity(key, itemService.getItem(key).quantity() - value));
+            shoppingCartService.deleteShoppingCart(foundShoppingCart);
+            printOrderDetails(order);
+            return Optional.of(order);
+        }
+    }
+    public void printOrderDetails(final Order order) {
         orderService.printOrderDetails(order);
     }
 }

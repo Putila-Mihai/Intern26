@@ -10,7 +10,7 @@ import java.util.Set;
 public class OrderRepository implements IRepository<Order> {
     Set<Order> orders;
     
-    public OrderRepository(Set<Order> orders) {
+    public OrderRepository(final Set<Order> orders) {
         this.orders = orders;
     }
     
@@ -24,46 +24,34 @@ public class OrderRepository implements IRepository<Order> {
     }
 
     @Override
-    public Order add(Order order) {
-        try {
-            if (orders.contains(order))
-                throw new RuntimeException("order already exists");
-            if (order.equals(null))
-                throw new NullPointerException("order is null");
-            orders.add(order);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+    public Order add(final Order order) {
+        if (find(order).isPresent()) {
+            throw new RuntimeException("Order already exists");
         }
+        orders.add(order);
         return order;
     }
 
     @Override
-    public void remove(Order order) {
-        try {
-            Optional<Order> orderToRemove = Optional.of(this.get(Optional.of(order).stream().findFirst().orElseThrow()));
-            orders.remove(orderToRemove.get());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public void remove(final Order order) {
+        find(order).ifPresentOrElse(orders::remove, () -> {
+            throw new RuntimeException("Order to be removed does not exist");
+        });
     }
 
     @Override
-    public Order update(Order order) {
+    public Order update(final Order order) {
         try {
-            Order orderToRemove = orders.stream()
-                    .filter(i -> i.id().equals(order.id()))
-                    .findFirst()
-                    .orElseThrow();
-            remove(orderToRemove);
+            remove(order);
             add(order);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             System.out.println(e.getMessage());
         }
         return order;
     }
 
     @Override
-    public Order get(Order order) {
-        return orders.stream().filter(i -> i.id().equals(order.id())).findFirst().orElseThrow();
+    public Optional<Order> find(final Order order) {
+        return orders.stream().filter(i -> i.id().equals(order.id())).findFirst();
     }
 }

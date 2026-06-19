@@ -1,6 +1,6 @@
 package betr.intern.Repos;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface IRepository<T> {
@@ -8,5 +8,5 @@ public interface IRepository<T> {
     T add(T t);
     void remove(T t);
     T update(T t);
-    T get(T t);
+    Optional<T> find(T t);
 }
