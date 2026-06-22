@@ -1,5 +1,7 @@
 **Pentru a exersa un pic Java Collections:**
 
+link for learning: https://java8.info/collections/collectionovw.html
+
 1. Create an immutable list of names (`String` type). Populate it with five names and print the first letter from each name.
 
 2. What changes are necessary for the above list in order to allow the addition of new elements and to associate a nickname with each name? Please implement these changes in a distinct method.
