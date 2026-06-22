@@ -66,7 +66,10 @@ public class Service {
         } else {
             final Order order = orderService.addOrder(foundShoppingCart);
             foundShoppingCart.items().forEach((key, value) ->
-                    itemService.updateItemQuantity(key, itemService.getItem(key).quantity() - value));
+            {
+                final int newItemQuantity = itemService.getItem(key).quantity();
+                itemService.updateItemQuantity(key, newItemQuantity - value);
+            });
             shoppingCartService.deleteShoppingCart(foundShoppingCart);
             printOrderDetails(order);
             return Optional.of(order);
