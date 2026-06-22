@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id("com.diffplug.spotless") version "8.7.0"
 }
 
 group = 'betr.intern'
@@ -17,4 +18,13 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }

@@ -20,7 +20,7 @@ link for learning: https://java8.info/collections/collectionovw.html
 
 5. Write a Java program to test if a hash set is empty or not. If it’s not empty, then display the number of elements. *(The hash set can be defined directly in the program, no need to read it/create it from the console).*
 
-6. Write a Java program to convert an array to a hash set.
+6. Write a Java program to convert an array to a hash set.                  
 
 7. Given a list of words representing animals, group them by their length:
     * Populate the collection needed.
@@ -30,4 +30,5 @@ link for learning: https://java8.info/collections/collectionovw.html
     * Check if length `7` is missing and, if so, set its value (using Java 8 Map-related features for that).
     * Check if length `3` is present and, if so, add `"cat"` to it.
 
-8. PitchTech acquires tickets for an America business trip, to be shared by employees. Create and display a waiting list for employees, where the names should appear in the order of their review points.
+8. PitchTech acquires tickets for an America business trip, to be shared by employees. 
+Create and display a waiting list for employees, where the names should appear in the order of their review points.
