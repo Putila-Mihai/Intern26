@@ -1,6 +1,6 @@
 package betr.intern;
 
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,7 +31,7 @@ public class Colour {
 
     public List<String> sortColoursDescending() {
         final List<String> list = new java.util.ArrayList<>(List.copyOf(colours));
-        list.sort(Collections.reverseOrder());
+        list.sort(Comparator.reverseOrder());
         return list.stream().toList();
     }
 

@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 public class Main {
 
     // exercise 1
-    private static List<String> createAndPrintStrings() {
+    private static List<String> createAndPrintFirstLetterOfStrings() {
         final List<String> unmodifiableList = List.of("Andreea", "Adrian", "lol", "lmao", "even");
-        unmodifiableList.forEach(System.out::println);
+        unmodifiableList.forEach(s -> System.out.println(s.charAt(0)));
         return unmodifiableList;
     }
 
@@ -88,7 +88,7 @@ public class Main {
     }
 
     public static void main(final String[] args) {
-        final List<String> list = createAndPrintStrings();
+        final List<String> list = createAndPrintFirstLetterOfStrings();
         final String[] array = Arrays.copyOf(list.toArray(), list.size(), String[].class);
         final HashSet<String> hashSet = convertArrayToHashSet(array);
 
