@@ -4,15 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Animal {
-    final HashMap<Integer, List<String>> animalsWithWordLength;
+public record Animal() {
+    private static final HashMap<Integer, List<String>> animalsWithWordLength = new HashMap<>();
 
-    public Animal(final HashMap<Integer, List<String>> animalsWithWordLength) {
-        this.animalsWithWordLength = animalsWithWordLength;
-    }
-
-    public Animal() {
-        this.animalsWithWordLength = new HashMap<>();
+    public Animal {
         animalsWithWordLength.put(1, List.of("a"));
         animalsWithWordLength.put(3, List.of("cat"));
         animalsWithWordLength.put(6, List.of("parrot", "parryi"));

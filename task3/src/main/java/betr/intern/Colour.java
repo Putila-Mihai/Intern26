@@ -1,15 +1,11 @@
 package betr.intern;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class Colour {
-    final List<String> colours;
-
-    public Colour(final List<String> colours) {
-        this.colours = colours;
-    }
+public record Colour(List<String> colours) {
 
     public List<String> toUpperCase() {
         return colours.stream().map(String::toUpperCase).toList();
@@ -30,7 +26,7 @@ public class Colour {
     }
 
     public List<String> sortColoursDescending() {
-        final List<String> list = new java.util.ArrayList<>(List.copyOf(colours));
+        final List<String> list = new ArrayList<>(List.copyOf(colours));
         list.sort(Comparator.reverseOrder());
         return list.stream().toList();
     }
