@@ -36,7 +36,7 @@ public class Main {
 
         Stock laptopStock = inventoryRepository.findByItem(laptop).orElseThrow();
         Stock mouseStock = inventoryRepository.findByItem(mouse).orElseThrow();
-        Stock novelStock = inventoryRepository.findByItem(novel).orElseThrow();
+        
 
         cart.addItem(laptop, 2, laptopStock);
         cart.addItem(mouse, 3, mouseStock);

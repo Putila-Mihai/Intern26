@@ -24,17 +24,6 @@ public class Order {
         return orderId;
     }
 
-    public OffsetDateTime getDatePurchased() {
-        return datePurchased;
-    }
-
-    public List<OrderItem> getItems() {
-        return items;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
 
     // Afiseaza detaliile comenzii sub forma unui bon de cumparaturi real
     public void printOrderDetail() {
