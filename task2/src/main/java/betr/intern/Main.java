@@ -46,13 +46,13 @@ public class Main {
         try {
             cart.addItem(laptop, 4, laptopStock);
         } catch (OutOfStockException e) {
-            System.out.println("\nEroare la adaugare in cos: " + e.getMessage());
+            System.out.println("\n[Avertisment Stoc] Nu s-a putut adauga produsul: " + e.getMessage());
         }
 
         try {
             inventoryService.registerItem(1L, "Alt Laptop", "Spec", 100.0, electronics, 1);
         } catch (DuplicateItemException e) {
-            System.out.println("Eroare la inregistrare produs: " + e.getMessage());
+            System.out.println("[Alerta Catalog] Inregistrare esuata: " + e.getMessage());
         }
 
         checkoutService.checkout(cart);

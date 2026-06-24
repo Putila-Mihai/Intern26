@@ -55,15 +55,22 @@ public class ShoppingCart {
 
     public void printCart() {
         if (items.isEmpty()) {
-            System.out.println("Cosul de cumparaturi este gol.");
+            System.out.println("Cosul tau de cumparaturi este gol.");
             return;
         }
-        System.out.println("\n Cos de cumparaturi:");
+        
+        System.out.println("\n--- Produsele din cosul tau ---");
         for (CartItem cartItem : items) {
-            System.out.println("- " + cartItem);
+            // Afisam detaliile fiecarei linii din cos intr-un format usor de citit
+            System.out.printf("  - %s: %d buc. x %.2f RON (Subtotal: %.2f RON)\n",
+                    cartItem.getItem().getName(),
+                    cartItem.getQuantity(),
+                    cartItem.getItem().getPrice(),
+                    cartItem.getSubtotal());
         }
-        System.out.printf("Total de plata: %.2f RON\n", getTotalPrice());
-
+        // Folosim getTotalPrice() care ruleaza un Stream pentru a insuma subtotalurile din mers
+        System.out.printf("Valoare totala cos: %.2f RON\n", getTotalPrice());
+        System.out.println("--------------------------------");
     }
 
     private Optional<CartItem> findCartItem(Item item) {
