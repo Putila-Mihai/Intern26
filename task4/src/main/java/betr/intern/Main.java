@@ -1,17 +1,30 @@
 package betr.intern;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.time.OffsetDateTime;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Pair<Integer> first = new Pair<>(1,2);
+        System.out.println(first);
+        Pair<String> second = new Pair<>("hello","world");
+        System.out.println(second);
+        Pair<OffsetDateTime> third = new Pair<>(OffsetDateTime.now(),OffsetDateTime.MAX);
+        System.out.println(third);
+        RecordColour colours1 = new RecordColour(List.of("red","blue","green"));
+        RecordColour colours2 = new RecordColour(List.of("yellow","purple","pink"));
+        Pair<RecordColour> fourth = new Pair<>(colours1,colours2);
+        System.out.println(fourth);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        fourth.setFirst(new RecordColour(colours1.changeColour("red", "orange")));
+        System.out.println(fourth);
+
+        PairNumber<Integer> number = new PairNumber<>(1,2);
+        System.out.println(number);
+        PairNumber<Double> number1 = new PairNumber<>(15.2d, 2d);
+        System.out.println(number1);
+
+        // compile error, String not subclass of Number
+        // PairNumber<String> numberLol = new PairNumber<String>("asd","lol");
     }
 }

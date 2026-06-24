@@ -1,4 +1,6 @@
-Create a generic class Pair that can hold two objects of the same type. The class should be able to store any type of objects (e.g., Integer, String, Double) and provide methods to access and set these objects. For example:
+Create a generic class Pair that can hold two objects of the same type. 
+The class should be able to store any type of objects (e.g., Integer, String, Double)
+and provide methods to access and set these objects. For example:
 
 * getFirst(): Returns the first object of the pair.
 * getSecond(): Returns the second object of the pair.
