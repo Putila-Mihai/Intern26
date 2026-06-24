@@ -26,7 +26,7 @@ public class Main {
 
         Item laptop = inventoryService.registerItem(1L, "Laptop", "High performance laptop", 1200.00, electronics, 5);
         Item mouse = inventoryService.registerItem(2L, "Mouse", "Wireless mouse", 25.50, electronics, 10);
-        Item novel = inventoryService.registerItem(3L, "Novel", "Fictional novel book", 15.00, books, 3);
+
 
         inventoryService.printFullInventory();
 
@@ -36,7 +36,7 @@ public class Main {
 
         Stock laptopStock = inventoryRepository.findByItem(laptop).orElseThrow();
         Stock mouseStock = inventoryRepository.findByItem(mouse).orElseThrow();
-        
+
 
         cart.addItem(laptop, 2, laptopStock);
         cart.addItem(mouse, 3, mouseStock);
