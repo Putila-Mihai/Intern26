@@ -22,7 +22,7 @@ public class Main {
         CheckoutService checkoutService = new CheckoutService(inventoryRepository, orderRepository);
 
         Category electronics = categoryRepository.save(new Category(null, "Electronics"));
-        Category books = categoryRepository.save(new Category(null, "Books"));
+
 
         Item laptop = inventoryService.registerItem(1L, "Laptop", "High performance laptop", 1200.00, electronics, 5);
         Item mouse = inventoryService.registerItem(2L, "Mouse", "Wireless mouse", 25.50, electronics, 10);
