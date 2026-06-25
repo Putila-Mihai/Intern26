@@ -1,17 +1,88 @@
 package betr.intern;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.util.*;
+import java.util.function.*;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+public class Main {
+    @FunctionalInterface
+    interface IntTernaryOperator {
+        int applyAsInt(int a, int b, int c);
+    }
+
+
+    public static void main(String[] args) {
+        // exercise 1
+        IntBinaryOperator binaryOperator = (a, b) -> a + b;
+        System.out.println(binaryOperator.applyAsInt(1, 2));
+
+        System.out.println();
+
+        // exercise 2
+        Optional<String> string = Optional.ofNullable(null);
+        Optional<String> string2 = Optional.ofNullable("a");
+
+        Predicate<Optional<String>> checkIfStringIsNotNullAndNotEmpty =
+                (str) -> str.isEmpty() || str.get().isEmpty();
+
+        System.out.println(checkIfStringIsNotNullAndNotEmpty.test(string));
+        System.out.println(checkIfStringIsNotNullAndNotEmpty.test(string2));
+
+        System.out.println();
+
+        // exercise 3
+        // list is mutable cuz i wanted to use consumer
+        // for example where list is immutable, see ex. 6 where function is used
+        List<Integer> mutableList = Arrays.asList(1, 5, 2, 4, 3);
+        Consumer<List<Integer>> sorter =
+                (n) -> Collections.sort(n, Comparator.reverseOrder());
+        sorter.accept(mutableList);
+
+        System.out.println(mutableList);
+
+        System.out.println();
+
+        // exercise 4
+        String lmao = "Ana are mere";
+        UnaryOperator<String> removeSpacesAndConvertToUpperCase = str ->  str.replace(" ", "").toUpperCase();
+        lmao = removeSpacesAndConvertToUpperCase.apply(lmao);
+        System.out.println(lmao);
+
+        System.out.println();
+
+        // exercise 5
+        BiFunction<Predicate<Integer>, Integer, String> checkPredicateResultOnInteger =
+                (predicate, a) ->
+                        predicate.test(a) ? "Accepted" : "Rejected";
+        System.out.println(checkPredicateResultOnInteger.apply(Predicate.isEqual(10), 10));
+        System.out.println(checkPredicateResultOnInteger.apply(Predicate.isEqual(9), 10));
+
+        System.out.println();
+
+        // exercise 6
+        List<Person> people = List.of(new Person("Giga"), new Person("Chad"));
+        Function<List<Person>, List<Person>> appendHonorificsToNamesOfPeople =
+                (persons) -> persons.stream().map(person -> new Person("Mr./Ms. " + person.name())).toList();
+        System.out.println(appendHonorificsToNamesOfPeople.apply(people));
+
+        System.out.println();
+
+        // exercise 7
+        Runnable printRandomValue = () -> System.out.println(Math.random());
+        printRandomValue.run();
+
+        System.out.println();
+
+        // exercise 8
+        IntBinaryOperator integerProduct = (a, b) -> a * b + 10;
+        System.out.println(integerProduct.applyAsInt(4, 6));
+
+        System.out.println();
+
+        // exercise 9
+        IntTernaryOperator integerProductAndAddWithConstantValue = (a, b, c) -> a * b + c;
+        System.out.println(integerProductAndAddWithConstantValue.applyAsInt(4, 6, 10));
+
+
+
     }
 }
