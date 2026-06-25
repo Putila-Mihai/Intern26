@@ -21,6 +21,9 @@ public class Stock {
     }
 
     public void setItem(Item item){
+        if(item==null){
+            throw new IllegalArgumentException("Item-ul nu exista!");
+        }
         this.item=item;
     }
     public Item getItem(){
@@ -28,6 +31,9 @@ public class Stock {
     }
 
     public void setQuantity(int quantity){
+        if(quantity<0){
+            throw new IllegalArgumentException("Cantitatea nu poate fi negativa!");
+        }
         this.quantity=quantity;
     }
 

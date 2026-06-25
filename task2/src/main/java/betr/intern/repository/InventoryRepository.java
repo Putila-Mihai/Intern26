@@ -3,35 +3,37 @@ package betr.intern.repository;
 import betr.intern.model.Item;
 import betr.intern.model.Stock;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class InventoryRepository {
 
-    private final List<Stock> inventory = new ArrayList<>();
+    private final Map<Long, Stock> inventory = new LinkedHashMap<>();
 
     public void save(Stock stock) {
-        deleteByItem(stock.getItem());
-        inventory.add(stock);
+        inventory.put(stock.getItem().getId(), stock);
     }
 
     public List<Stock> findAll() {
-        return new ArrayList<>(inventory);
+        return new ArrayList<>(inventory.values());
     }
 
     public Optional<Stock> findByItem(Item item) {
-        return inventory.stream()
-                .filter(s -> s.getItem().equals(item))
-                .findFirst();
+        if (item == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(inventory.get(item.getId()));
     }
 
     public Optional<Stock> findByItemId(Long itemId) {
-        return inventory.stream()
-                .filter(s -> s.getItem().getId().equals(itemId))
-                .findFirst();
+        return Optional.ofNullable(inventory.get(itemId));
     }
 
     public void deleteByItem(Item item) {
-        inventory.removeIf(s -> s.getItem().equals(item));
+        if (item != null) {
+            inventory.remove(item.getId());
+        }
     }
 }

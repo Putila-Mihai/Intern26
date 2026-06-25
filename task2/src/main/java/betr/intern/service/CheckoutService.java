@@ -22,13 +22,25 @@ public class CheckoutService {
 
     public Order checkout(ShoppingCart cart) {
         List<CartItem> cartItems = cart.getItems();
-        
-        if (cartItems.isEmpty()) {
+        validateCart(cartItems);
+
+        List<OrderItem> orderItems = processCartItems(cartItems);
+        Order order = createOrder(orderItems);
+
+        cart.clear();
+        order.printOrderDetail();
+
+        return order;
+    }
+
+    private void validateCart(List<CartItem> cartItems) {
+        if (cartItems == null || cartItems.isEmpty()) {
             throw new IllegalStateException("Nu poti plasa o comanda cu un cos gol!");
         }
+    }
 
+    private List<OrderItem> processCartItems(List<CartItem> cartItems) {
         List<OrderItem> orderItems = new ArrayList<>();
-
         for (CartItem cartItem : cartItems) {
             Stock stock = inventoryRepository.findByItem(cartItem.getItem())
                     .orElseThrow(() -> new IllegalArgumentException("Produsul " + cartItem.getItem().getName() + " nu mai exista in magazin!"));
@@ -41,20 +53,18 @@ public class CheckoutService {
             stock.deductQuantity(cartItem.getQuantity());
 
             OrderItem orderItem = new OrderItem(
-                    cartItem.getItem(), 
-                    cartItem.getQuantity(), 
+                    cartItem.getItem(),
+                    cartItem.getQuantity(),
                     cartItem.getItem().getPrice()
             );
             orderItems.add(orderItem);
         }
+        return orderItems;
+    }
 
+    private Order createOrder(List<OrderItem> orderItems) {
         long orderId = orderRepository.getNextOrderId();
         Order order = new Order(orderId, orderItems);
-        orderRepository.save(order);
-
-        cart.clear();
-        order.printOrderDetail();
-
-        return order;
+        return orderRepository.save(order);
     }
 }

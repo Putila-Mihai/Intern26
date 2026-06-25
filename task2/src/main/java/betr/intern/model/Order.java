@@ -2,18 +2,19 @@ package betr.intern.model;
 
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Order {
     private final Long orderId;
-    // Folosim OffsetDateTime pentru a salva momentul precis al tranzactiei, incluzand fusul orar (UTC/Timezone)
     private final OffsetDateTime datePurchased;
     private final List<OrderItem> items;
     private final double totalPrice;
 
     public Order(Long orderId, List<OrderItem> items) {
         this.orderId = orderId;
-        this.items = items;
+        this.items = Collections.unmodifiableList(new ArrayList<>(items));
         this.datePurchased = OffsetDateTime.now();
         this.totalPrice = items.stream()
                 .mapToDouble(OrderItem::getSubtotal)
@@ -24,8 +25,18 @@ public class Order {
         return orderId;
     }
 
+    public OffsetDateTime getDatePurchased() {
+        return datePurchased;
+    }
 
-    // Afiseaza detaliile comenzii sub forma unui bon de cumparaturi real
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
     public void printOrderDetail() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss Z");
         

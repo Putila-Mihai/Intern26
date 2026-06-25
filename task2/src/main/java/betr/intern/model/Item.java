@@ -66,9 +66,16 @@ public class Item {
     public void setCategory(Category category){
         this.category=category;
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return java.util.Objects.equals(id, item.id);
+    }
 
-
-
-
-
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(id);
+    }
 }
