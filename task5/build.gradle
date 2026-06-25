@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'application'
+    id("com.diffplug.spotless") version "8.7.0"
 }
 
 group = 'betr.intern'
@@ -17,4 +19,17 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = 'betr.intern.Main'
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
