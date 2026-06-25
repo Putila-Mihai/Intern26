@@ -1,6 +1,6 @@
 package betr.intern;
 
-public class Pair <T>{
+public class Pair <T extends Number> {
 
     private T first; //encapsulation, abstraction, SRP
     private T second;
@@ -28,7 +28,6 @@ public class Pair <T>{
 
 
     @Override
-
     public String toString(){
         return "Pair(" +first + "," + second + ")";
     }
