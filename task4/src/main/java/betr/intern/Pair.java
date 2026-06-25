@@ -4,7 +4,7 @@ public class Pair<T> {
     private T first;
     private T second;
 
-    public Pair(T first, T second) {
+    public Pair(final T first, final T second) {
         this.first = first;
         this.second = second;
     }
@@ -17,11 +17,11 @@ public class Pair<T> {
         return second;
     }
 
-    public void setFirst(T firstToSet) {
+    public void setFirst(final T firstToSet) {
         this.first = firstToSet;
     }
 
-    public void setSecond(T secondToSet) {
+    public void setSecond(final T secondToSet) {
         this.second = secondToSet;
     }
 

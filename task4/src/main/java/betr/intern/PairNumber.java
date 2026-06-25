@@ -1,7 +1,7 @@
 package betr.intern;
 
 public class PairNumber<T extends Number> extends Pair<T>{
-    public PairNumber(T first, T second) {
+    public PairNumber(final T first, final T second) {
         super(first, second);
     }
 
@@ -9,7 +9,7 @@ public class PairNumber<T extends Number> extends Pair<T>{
         return super.getFirst();
     }
 
-    public void setFirst(T first) {
+    public void setFirst(final T first) {
         super.setFirst(first);
     }
 
@@ -17,7 +17,7 @@ public class PairNumber<T extends Number> extends Pair<T>{
         return super.getSecond();
     }
 
-    public void setSecond(T second) {
+    public void setSecond(final T second) {
         super.setSecond(second);
     }
 
