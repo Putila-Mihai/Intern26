@@ -4,7 +4,6 @@
 4. Given a list of integers, find the sum of their squares.
 5. Given a list of Person objects, group them by their age and THEN by their nationality.
 
-6. 
 ``` 
 class Person {
 private String name;
@@ -42,10 +41,13 @@ new Person("David", 30, "UK")
     }
 }
 ``` 
-7.
-``` 
-Given a list of Product objects, filter out the products with a price higher than $50, then group them by their category, and finally, find the average price for each category.
+6
+Given a list of Product objects, 
+filter out the products with a price higher than $50, 
+then group them by their category, and finally, 
+find the average price for each category.
 
+``` 
 class Product {
 private String name;
 private String category;
