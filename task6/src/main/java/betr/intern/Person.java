@@ -5,7 +5,7 @@ public class Person {
   private final int age;
   private final String nationality;
 
-  public Person(String name, int age, String nationality) {
+  public Person(final String name, final int age, final String nationality) {
     this.name = name;
     this.age = age;
     this.nationality = nationality;
